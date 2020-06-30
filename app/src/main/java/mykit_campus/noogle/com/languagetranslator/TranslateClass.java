@@ -18,39 +18,23 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import static mykit_campus.noogle.com.languagetranslator.Config.link;
+
 
 public class TranslateClass extends Activity {
     private ProgressBar progressBar;
     private WebView webView;
-    LinearLayout errorLayout;
-    RelativeLayout webviewLayout,progressLayout;
-    Button tryConnectionAgainButton,cancelButton;
+    private LinearLayout errorLayout;
+    private RelativeLayout webviewLayout,progressLayout;
+    private Button tryConnectionAgainButton;
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_view);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        }
-
         init();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setMax(100);
-
-
-        final String link = "https://translate.google.com/#view=home&op=translate&sl=auto&tl=yo&text=%23";
-        webView = (WebView) findViewById(R.id.webView);
-        webView.setWebViewClient(new WebViewClientDemo());
-        webView.setWebChromeClient(new WebChromeClientDemo());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(link);
-
+        webViewMethod();
 
         tryConnectionAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,23 +47,22 @@ public class TranslateClass extends Activity {
                 webView.loadUrl(link);
             }
         });
-
-//        cancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
     }
-
-
     void init(){
-
-//        cancelButton = (Button) findViewById(R.id.cancelButton);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         errorLayout=(LinearLayout)findViewById(R.id.errorLayout);
         webviewLayout=(RelativeLayout)findViewById(R.id.webviewLayout);
         progressLayout=(RelativeLayout)findViewById(R.id.progressLayout);
         tryConnectionAgainButton = (Button) findViewById(R.id.internetTryAgainButton);
+        progressBar.setMax(100);
+    }
+
+    void webViewMethod(){
+        webView = (WebView) findViewById(R.id.webView);
+        webView.setWebViewClient(new WebViewClientDemo());
+        webView.setWebChromeClient(new WebChromeClientDemo());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(link);
     }
     void showErrorLayout(){
         webviewLayout.setVisibility(View.GONE);
